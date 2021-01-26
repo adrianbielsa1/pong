@@ -18,3 +18,12 @@
     <img id="themeImage" src="media/light-mode.svg" alt="Light mode" title="Light mode"></img>
 
 </html>
+
+<!--
+    Since this site is pretty lightweight, it's ok to load scripts after the
+    DOM has been loaded.
+    TODO: Being `async`, should this be placed above? Should it not be `async`
+    at all?
+-->
+<script type="module" src="source-code/main.js" async></script>
+<noscript>You need to enable JavaScript to view the full site.</noscript>
