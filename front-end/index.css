@@ -1,0 +1,22 @@
+#mainCanvas {
+
+    position: absolute;
+    left: 0px;
+    top: 0px;
+
+    /* TODO: Are these necessary? */
+    max-width: 100%;
+    max-height: 100%;
+
+}
+
+/*
+    TODO: Is it bad to discount 10 pixels regardless of the site's resolution?
+*/
+#themeImage {
+
+    position: absolute;
+    top: 10px;
+    right: 10px;
+
+}
