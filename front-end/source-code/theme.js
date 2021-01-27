@@ -55,5 +55,15 @@ export function paddle() {
     }
 }
 
+/* Returns the current color for the ball. */
+export function ball() {
+    switch (getCurrentTheme()) {
+        case "light":
+            return "aquamarine";
+        case "dark":
+            return "aquamarine"; //"lightGrey";
+    }
+}
+
 /* Set up everything. */
 prepare();
