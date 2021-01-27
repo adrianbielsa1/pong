@@ -59,7 +59,7 @@ export function paddle() {
 export function ball() {
     switch (getCurrentTheme()) {
         case "light":
-            return "aquamarine";
+            return "blue";
         case "dark":
             return "aquamarine"; //"lightGrey";
     }
