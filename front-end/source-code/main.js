@@ -87,12 +87,16 @@ function updateBall(deltaTime) {
     }
 
     if (ball.x < 0 || ball.x >= mainCanvas.width) {
+        ball.angle = (360 - ball.angle);
         ball.angle += 180;
-        ball.angle *= -1;
+    }
+
+    while (ball.angle > 360) {
+        ball.angle -= 360;
     }
 
     if (ball.y < 0 || ball.y >= mainCanvas.height) {
-        ball.angle *= -1;
+        ball.angle = (360 - ball.angle);
     }
 
     while (ball.angle > 360) {
