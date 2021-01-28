@@ -39,6 +39,7 @@ function prepare() {
 
 /* Changes the position of the paddles, depending on key presses. */
 function updatePaddles(deltaTime) {
+function updatePlayerPaddle(deltaTime) {
     /* The paddle moves 1% of the canvas' height every 10ms (at most). */
     const variation = mainCanvas.height * (deltaTime / 10) * 0.01;
 
@@ -62,6 +63,22 @@ function updatePaddles(deltaTime) {
     if (paddleAABB.bottom > canvasAABB.bottom) {
         leftPaddle.y += (canvasAABB.bottom - paddleAABB.bottom);
     }
+}
+
+/* Moves the AI-controlled paddle in order to make it collide with the
+   ball. */
+function updateAIPaddle(deltaTime) {
+    /* If the ball ain't moving towards our paddle, we do nothing. We've got
+       the plus that the AI paddle is always at the right. */
+    if (ball.angle < 90 || ball.angle > 270) {
+        /* TODO: Complete. */
+    }
+}
+
+/* Changes the position of the paddles, depending on key presses/AI. */
+function updatePaddles(deltaTime) {
+    updatePlayerPaddle(deltaTime);
+    updateAIPaddle(deltaTime);
 }
 
 /* Changes the position of the ball. */
