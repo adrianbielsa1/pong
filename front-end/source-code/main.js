@@ -37,8 +37,6 @@ function prepare() {
     onResize();
 }
 
-/* Changes the position of the paddles, depending on key presses. */
-function updatePaddles(deltaTime) {
 function updatePlayerPaddle(deltaTime) {
     /* The paddle moves 1% of the canvas' height every 10ms (at most). */
     const variation = mainCanvas.height * (deltaTime / 10) * 0.01;
