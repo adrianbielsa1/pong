@@ -83,7 +83,8 @@ function updatePaddles(deltaTime) {
 function updateBall(deltaTime) {
     /* When the ball touches the left paddle, it starts moving to the right. */
     if (collision.circleAndAABB(ball.circle, leftPaddle.aabb)) {
-        // negateAngle(ball);
+        /* TODO: Maybe decrease this a little? */
+        ball.speed += 1;
     }
 
     if (ball.x < 0 || ball.x >= mainCanvas.width) {
@@ -105,8 +106,6 @@ function updateBall(deltaTime) {
 
     ball.x += Math.cos(ball.angle * (Math.PI / 180)) * ball.speed;
     ball.y += Math.sin(ball.angle * (Math.PI / 180)) * ball.speed;
-
-    ball.speed += 0.01;
 }
 
 /* Updates paddles and ball. */
