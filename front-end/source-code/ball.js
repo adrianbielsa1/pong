@@ -3,6 +3,7 @@ import { Circle } from "./circle.js";
 export class Ball {
     #_x
     #_y
+    #_angle
 
     constructor(x, y, radius) {
         this.#_x = x;
@@ -35,5 +36,21 @@ export class Ball {
 
     get y() {
         return this.#_y;
+    }
+
+    set angle(newAngle) {
+        while (newAngle > 360) {
+            newAngle -= 360;
+        }
+
+        while (newAngle < 0) {
+            newAngle += 360;
+        }
+
+        this.#_angle = newAngle;
+    }
+
+    get angle() {
+        return this.#_angle;
     }
 }

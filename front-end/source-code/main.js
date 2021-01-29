@@ -92,16 +92,8 @@ function updateBall(deltaTime) {
         ball.angle += 180;
     }
 
-    while (ball.angle > 360) {
-        ball.angle -= 360;
-    }
-
     if (ball.y < 0 || ball.y >= mainCanvas.height) {
         ball.angle = (360 - ball.angle);
-    }
-
-    while (ball.angle > 360) {
-        ball.angle -= 360;
     }
 
     ball.x += Math.cos(ball.angle * (Math.PI / 180)) * ball.speed;
