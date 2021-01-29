@@ -10,6 +10,7 @@ const mainCanvasContext = mainCanvas.getContext("2d");
 
 /* Paddles and ball. */
 const leftPaddle = new Paddle();
+const rightPaddle = new Paddle();
 const ball = new Ball(mainCanvas.width / 2, mainCanvas.height / 2, 5);
 
 /* Keyboard. */
