@@ -23,6 +23,9 @@ var lastTickTimestamp = undefined;
 function onResize() {
     mainCanvas.width = window.innerWidth;
     mainCanvas.height = window.innerHeight;
+
+    /* Keep the right paddle at the right. */
+    rightPaddle.x = mainCanvas.width;
 }
 
 /* Prepares keyboard/mouse callbacks, among other things. */
@@ -36,6 +39,9 @@ function prepare() {
 
     /* Call `onResize` for the first time so the canvas takes up the whole page. */
     onResize();
+
+    /* Position the right paddle at half the height. */
+    rightPaddle.y = mainCanvas.height / 2;
 }
 
 function updatePlayerPaddle(deltaTime) {
