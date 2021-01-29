@@ -107,6 +107,18 @@ function update(deltaTime) {
     updateBall(deltaTime);
 }
 
+/* Paints a paddle on the canvas. */
+function drawPaddle(paddle) {
+    /* Get the paddle's AABB. */
+    const paddleAABB = paddle.aabb;
+    const paddleWidth = paddleAABB.right - paddleAABB.left;
+    const paddleHeight = paddleAABB.bottom - paddleAABB.top;
+
+    /* Paint the paddle. */
+    mainCanvasContext.fillStyle = theme.paddle();
+    mainCanvasContext.fillRect(paddleAABB.left, paddleAABB.top, paddleWidth, paddleHeight);
+}
+
 /* Repaints the whole screen. */
 function draw(deltaTime) {
     /* Remove everything from the screen. */
