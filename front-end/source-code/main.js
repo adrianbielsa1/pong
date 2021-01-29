@@ -128,14 +128,9 @@ function draw(deltaTime) {
     mainCanvasContext.fillStyle = theme.background();
     mainCanvasContext.fillRect(0, 0, mainCanvas.width, mainCanvas.height);
 
-    /* Get the paddle's AABB. */
-    const paddleAABB = leftPaddle.aabb;
-    const paddleWidth = paddleAABB.right - paddleAABB.left;
-    const paddleHeight = paddleAABB.bottom - paddleAABB.top;
-
-    /* Paint the left paddle. */
-    mainCanvasContext.fillStyle = theme.paddle();
-    mainCanvasContext.fillRect(paddleAABB.left, paddleAABB.top, paddleWidth, paddleHeight);
+    /* Paint both left and right paddles. */
+    drawPaddle(leftPaddle);
+    drawPaddle(rightPaddle);
 
     /* Paint the ball. */
     mainCanvasContext.fillStyle = theme.ball();
