@@ -45,8 +45,8 @@ function prepare() {
 }
 
 function updatePlayerPaddle(deltaTime) {
-    /* The paddle moves 1% of the canvas' height every 10ms (at most). */
-    const variation = mainCanvas.height * (deltaTime / 10) * 0.01;
+    /* The paddle moves 1.5% of the canvas' height every 10ms (at most). */
+    const variation = mainCanvas.height * (deltaTime / 10) * 0.015;
 
     if (keyboard.isPressed(KeyboardKeys.Up)) {
         leftPaddle.y -= variation;
