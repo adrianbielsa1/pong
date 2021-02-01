@@ -53,4 +53,12 @@ export class Ball {
     get angle() {
         return this.#_angle;
     }
+
+    reflectHorizontally() {
+        this.angle += 180;
+    }
+
+    reflectVertically() {
+        this.angle = (360 - this.angle);
+    }
 }
