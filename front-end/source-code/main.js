@@ -73,8 +73,8 @@ function updatePlayerPaddle(deltaTime) {
 /* Moves the AI-controlled paddle in order to make it collide with the
    ball. */
 function updateAIPaddle(deltaTime) {
-    /* If the ball ain't moving towards our paddle, we do nothing. We've got
-       the plus that the AI paddle is always at the right. */
+    /* If the ball ain't moving towards our paddle, we do nothing. We know for
+       certain (or not?) that the AI paddle is always at the right. */
     if (ball.angle < 90 || ball.angle > 270) {
         /* TODO: Complete. */
     }
