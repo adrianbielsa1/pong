@@ -13,6 +13,9 @@ export class Game {
         /* A timestamp of the last time the `run` method was called. */
         this.lastTickTimestamp = NaN;
 
+        /* Determines if the current game tick should be ignored. */
+        this.ignoreTick = false;
+
         /* External HTML elements required to set up the render. */
         const mainCanvas = document.getElementById("mainCanvas");
         const mainCanvasContext = mainCanvas.getContext("2d");
@@ -44,6 +47,9 @@ export class Game {
         ];
 
         this.ball.hackyPlugPaddles(this.paddles);
+
+        /* To be notified when the tab's visiblity changes. */
+        document.addEventListener("visibilitychange", this.handleVisibilityChange.bind(this), false);
     }
 
     /* Updates the game continuously. */
@@ -66,9 +72,14 @@ export class Game {
         /* Update last call's timestamp. */
         this.lastTickTimestamp = currentTickTimestamp;
 
-        /* Do actual game-related actions. */
-        this.update(deltaTime);
-        this.draw();
+        if (!this.ignoreTick) {
+            /* Do actual game-related actions. */
+            this.update(deltaTime);
+            this.draw();
+        } else {
+            /* Tick successfully ignored. */
+            this.ignoreTick = false;
+        }
 
         /* Make sure this method is called on the next frame. */
         window.requestAnimationFrame(this.run.bind(this));
@@ -102,8 +113,15 @@ export class Game {
         Returns either `true` or `false`, depending on whether the game's
         tab has focus or not.
     */
-    hasFocus() {
-
+    handleVisibilityChange() {
+        if (document.hidden) {
+            /*
+                When the tab loses visibility, we ignore a tick. This is
+                done to prevent having to deal with real big `deltaTime`
+                values, which would cause more problems than solutions.
+            */
+            this.ignoreTick = true;
+        }
     }
 
     /*
