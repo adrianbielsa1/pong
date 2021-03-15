@@ -69,8 +69,11 @@ export class PlayerPaddle extends Paddle {
         /* Check for each arrow key and move accordingly. */
         if (this.keyboard.isPressed(KeyboardKeys.UP)) { this.position.y -= velocity.y * deltaTimeInSeconds; }
         if (this.keyboard.isPressed(KeyboardKeys.DOWN)) { this.position.y += velocity.y * deltaTimeInSeconds; }
+
+        /*
         if (this.keyboard.isPressed(KeyboardKeys.LEFT)) { this.position.x -= velocity.x * deltaTimeInSeconds; }
         if (this.keyboard.isPressed(KeyboardKeys.RIGHT)) { this.position.x += velocity.x * deltaTimeInSeconds; }
+        */
 
         /* Make sure the paddle doesn't go off-screen. */
         if (this.position.x < 0) { this.position.x = 0; }
