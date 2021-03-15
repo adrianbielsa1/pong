@@ -92,31 +92,79 @@ export class Ball {
         this.position.x = this.trajectory.origin.x + distance.x * progress;
         this.position.y = this.trajectory.origin.y + distance.y * progress;
 
-        /* Make sure the paddle doesn't go off-screen needlessly. */
-        this.checkCollisions();
+        /*
+            Bounce the ball if it crashes with a paddle and make sure it
+            doesn't go off-screen.
+        */
+        this.checkForCollisions();
+        this.checkForBorders();
     }
 
-    /*
-        Checks if the paddle is on a border or colliding with a paddle,
-        and reflects it appropiately.
+    checkForCollisions() {
+        for (const paddle of this.paddles) {
+            if (this.collidesWith(paddle)) {
+                this.reflect(true, true);
+                this.predict();
 
-        TODO: Check collisions with paddles.
-    */
-    checkCollisions() {
+                return;
+            }
+        }
+    }
+
+    checkForBorders() {
         if (this.position.x == 0 || this.position.x == 100) {
-            /* We're on a horizontal border of the screen. */
+            /* We're on one of the horizontal borders of the screen. */
             this.reflect(true, true);
             this.predict();
         } else if (this.position.y == 0 || this.position.y == 100) {
-            /* We're on a vertical border of the screen. */
+            /* We're on one of the vertical borders of the screen. */
             this.reflect(false, true);
             this.predict();
-        } else {
-            /*
-                TODO: Throw an exception or something to notify about
-                the error.
-            */
         }
+    }
+
+    /*
+        Returns `true` or `false` depending on whether the ball is
+        colliding with a paddle, or not.
+
+        CREDITS: Matt Worden.
+    */
+    collidesWith(paddle) {
+        /* TODO: Remove or simplify. */
+        const circle = {
+            x: this.position.x,
+            y: this.position.y,
+        };
+
+        const aabb = {
+            left: paddle.position.x,
+            right: paddle.position.x + paddle.dimensions.width,
+            top: paddle.position.y,
+            bottom: paddle.position.y + paddle.dimensions.height,
+        };
+
+        /* TODO: Hardcoded ball's radius. */
+        const radius = 1;
+
+        /* Will be used for testing against the edges. */
+        let testX = circle.x;
+        let testY = circle.y;
+
+        /* Obtain the closest horizontal edge. */
+        if (circle.x < aabb.left) { testX = aabb.left; }
+        else if (circle.x > aabb.right) { testX = aabb.right; }
+
+        /* Obtain the closest vertical edge. */
+        if (circle.y < aabb.top) { testY = aabb.top; }
+        else if (circle.y > aabb.bottom) { testY = aabb.bottom; }
+
+        /* Get the distance from the closest edge. */
+        const distanceX = circle.x - testX;
+        const distanceY = circle.y - testY;
+        const distance = Math.sqrt((distanceX * distanceX) + (distanceY * distanceY));
+
+        /* If the distance is less than the radius, then they're colliding. */
+        return distance <= radius;
     }
 
     /* Changes the course of movement of the ball on the specified axes. */
