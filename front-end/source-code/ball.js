@@ -111,6 +111,12 @@ export class Ball {
         }
     }
 
+    reset() {
+        this.position = { x: 50, y: 50 };
+        this.direction = 1.3;
+        this.predict();
+    }
+
     checkForBorders() {
         if (this.position.x == 0 || this.position.x == 100) {
             /* We're on one of the horizontal borders of the screen. */
