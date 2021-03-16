@@ -1,4 +1,4 @@
-import { GameSides } from "./game.js";
+import { Game, GameSides } from "./game.js";
 
 /*
     The paddle is one of the main entities of the Pong. It moves from side
@@ -104,6 +104,12 @@ export class Ball {
         this.checkForBorders();
     }
 
+    reset() {
+        this.position = { x: 50, y: 50 };
+        this.direction = Game.random(0, 2 * Math.PI);
+        this.predict();
+    }
+
     checkForCollisions() {
         for (const paddle of this.paddles) {
             if (this.collidesWith(paddle)) {
@@ -113,12 +119,6 @@ export class Ball {
                 return;
             }
         }
-    }
-
-    reset() {
-        this.position = { x: 50, y: 50 };
-        this.direction = 1.3;
-        this.predict();
     }
 
     checkForBorders() {
