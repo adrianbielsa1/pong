@@ -14,6 +14,11 @@ export class Render {
     circle(position, radius, color) {
 
     }
+
+    /* Displays text on the screen. */
+    text(position, size, color, contents, font) {
+
+    }
 }
 
 /* Concrete HTML5 canvas backend. */
@@ -80,6 +85,28 @@ export class CanvasRender {
             positionInPixels.x, positionInPixels.y, radius, 0, Math.PI * 2
         );
         this.canvasContext.fill();
+    }
+
+    /* Displays text on the screen. */
+    text(position, size, color, contents, font) {
+        /* Transform percentages into pixels. */
+        const positionInPixels = {
+            x: position.x * this.canvas.width / 100,
+            y: position.y * this.canvas.height / 100
+        };
+
+        /*
+            Prepare the font.
+            
+            CREDITS: User "Grunt" from the "stackoverflow.com" website.
+        */
+        this.canvasContext.font = size * window.innerWidth + "px " + font;
+
+        /* Change color. */
+        this.canvasContext.fillStyle = color;
+
+        /* Display. */
+        this.canvasContext.fillText(contents, positionInPixels.x, positionInPixels.y);
     }
 
     /* TODO: Add documentation. */
