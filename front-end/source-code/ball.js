@@ -1,3 +1,5 @@
+import { GameSides } from "./game.js";
+
 /*
     The paddle is one of the main entities of the Pong. It moves from side
     to side with increasing speed, until a paddle fails to stop it, making
@@ -8,11 +10,13 @@ export class Ball {
         Establishes where the ball is, as well as its initial direction and
         speed.
     */
-    constructor(position, speed, direction, render) {
+    constructor(position, speed, direction, game, render) {
         /* Information about movement. */
         this.position = position;
         this.speed = speed;
         this.direction = direction;
+
+        this.game = game;
 
         /* Used to draw the ball on the screen. */
         this.render = render;
@@ -118,10 +122,12 @@ export class Ball {
     }
 
     checkForBorders() {
-        if (this.position.x == 0 || this.position.x == 100) {
-            /* We're on one of the horizontal borders of the screen. */
-            this.reflect(true, true);
-            this.predict();
+        if (this.position.x == 0) {
+            this.game.score(GameSides.RIGHT);
+            this.reset();
+        } else if (this.position.x == 100) {
+            this.game.score(GameSides.LEFT);
+            this.reset();
         } else if (this.position.y == 0 || this.position.y == 100) {
             /* We're on one of the vertical borders of the screen. */
             this.reflect(false, true);

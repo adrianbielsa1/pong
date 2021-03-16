@@ -23,6 +23,12 @@ export class Game {
         this.render = new CanvasRender(mainCanvas, mainCanvasContext);
         this.keyboard = new WindowKeyboard();
 
+        this.scores = {};
+
+        for (const [sideKey, sideValue] of Object.entries(GameSides)) {
+            this.scores[sideValue] = 0;
+        }
+
         /*
             Generate a random initial angle for the ball, and give it
             an initial speed.
@@ -38,7 +44,7 @@ export class Game {
         const ballDirection = Math.random(0, 2 * Math.PI);
         const ballSpeed = 25;
 
-        this.ball = new Ball({ x: 50, y: 50 }, ballSpeed, ballDirection, this.render);
+        this.ball = new Ball({ x: 50, y: 50 }, ballSpeed, ballDirection, this, this.render);
 
         this.paddles = [
             new PlayerPaddle({ x: 0, y: 50 }, { width: 0.25, height: 10 }, this.render, this.keyboard),
@@ -90,6 +96,15 @@ export class Game {
         /* Remove the previous frame from the screen. */
         this.render.clear(this.render.theme.background());
 
+        /* Draw scores. */
+        this.render.text(
+            { x: 10, y: 50 }, 0.1, "red", this.scores[GameSides.LEFT], "Arial"
+        );
+
+        this.render.text(
+            { x: 80, y: 50 }, 0.1, "red", this.scores[GameSides.RIGHT], "Arial"
+        );
+
         /* Draw all objects. */
         this.ball.draw();
         this.paddles.forEach(paddle => paddle.draw());
@@ -106,7 +121,7 @@ export class Game {
         passes through a `side`: either left or right.
     */
     score(side) {
-
+        this.scores[side] += 1;
     }
 
     /*
@@ -132,3 +147,11 @@ export class Game {
         return Math.random() * (max - min) + min;
     }
 }
+
+export const GameSides = {
+    LEFT: 0,
+    RIGHT: 1,
+};
+
+/* TODO: ... */
+Object.freeze(GameSides);
