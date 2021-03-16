@@ -41,7 +41,7 @@ export class Game {
             what is the meaning of each value, since Javascript doesn't
             support named parameters (as of the time of writing).
         */
-        const ballDirection = Math.random(0, 2 * Math.PI);
+        const ballDirection = Game.random(0, 2 * Math.PI);
         const ballSpeed = 25;
 
         this.ball = new Ball({ x: 50, y: 50 }, ballSpeed, ballDirection, this, this.render);
