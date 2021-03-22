@@ -102,7 +102,7 @@ export class Game {
         );
 
         this.render.text(
-            { x: 80, y: 50 }, 0.1, "red", this.scores[GameSides.RIGHT], "Arial"
+            { x: 90, y: 50 }, 0.1, "red", this.scores[GameSides.RIGHT], "Arial"
         );
 
         /* Draw all objects. */
