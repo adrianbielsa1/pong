@@ -16,6 +16,7 @@ export class Ball {
         this.speed = speed;
         this.direction = direction;
 
+        /* Used to notify about scoring events. */
         this.game = game;
 
         /* Used to draw the ball on the screen. */
