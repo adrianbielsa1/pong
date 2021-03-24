@@ -29,6 +29,23 @@ export class Paddle {
     draw() {
         this.render.rectangle(this.position, this.dimensions, this.render.theme.paddle());
     }
+
+    // Called when the ball changes its trajectory so the paddle can respond
+    // accordingly.
+    handleBallTrajectoryChange(ball) {
+
+    }
+
+    // Returns the paddle's rectangle, which can be used to check for
+    // collisions.
+    getRectangle() {
+        return {
+            left: this.position.x,
+            right: this.position.x + this.dimensions.width,
+            top: this.position.y,
+            bottom: this.position.y + this.dimensions.height,
+        };
+    }
 }
 
 /*
