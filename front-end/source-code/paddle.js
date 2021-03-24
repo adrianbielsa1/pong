@@ -141,34 +141,7 @@ export class BotPaddle extends Paddle {
         and actions of the paddle.
     */
     update(deltaTime) {
-        this.updateTarget();
         this.updatePosition(deltaTime);
-    }
-
-    /*
-        Checks if there are reasons to change this paddle's target, and
-        updates it accordingly.
-    */
-    updateTarget() {
-        const relativeDistanceVariation = this.getRelativeDistanceVariationWithBall();
-
-        /*
-            NOTE: If the `relativeDistanceVariation` between the entities is 0,
-            they're not moving away nor closer to each other.
-
-            TODO: Maybe handle the case when `relativeDistanceVariation` is 0?
-            It could happen if the ball moves on the same axis as the paddle.
-        */
-        if (relativeDistanceVariation < 0) {
-            /*
-                The distance between the entities is decreasing; they're moving
-                towards each other.
-            */
-            this.setTarget(BotPaddleTargets.BALL);
-        } else if (relativeDistanceVariation > 0) {
-            /* The distance between the entities is increasing. */
-            this.setTarget(BotPaddleTargets.CENTER);
-        }
     }
 
     /* Moves the paddle towards its target destination. */
@@ -198,95 +171,6 @@ export class BotPaddle extends Paddle {
         if (this.position.x + this.dimensions.width > 100) { this.position.x = 100 - this.dimensions.width; }
         if (this.position.y < 0) { this.position.y = 0; }
         if (this.position.y + this.dimensions.height > 100) { this.position.y = 100 - this.dimensions.height; }
-    }
-
-    /* Changes the paddle's target, updating variables accordingly. */
-    setTarget(newTarget) {
-        /* Just some syntax sugar, so the code below is easier to follow. */
-        const newTrajectory = this.getTargetTrajectory(newTarget);
-        const newOrigin = newTrajectory.origin;
-        const newDestination = newTrajectory.destination;
-
-        const sameTarget = (this.target == newTarget);
-        const sameDestination = (
-            this.targetTrajectory.destination.x == newDestination.x
-        ) && (
-            this.targetTrajectory.destination.y == newDestination.y
-        );
-        const sameDuration = (this.targetTrajectory.duration == newTrajectory.duration);
-
-        /*
-            Make sure the paddle is tracking the same entity, and
-            that the trajectory is also the same. This way, we prevent
-            unnecessary calculations.
-
-            TODO: Should I check the trajectory's elapsed time too?
-        */
-        if (!sameTarget || !sameDestination || !sameDuration) {
-            /* Update the target. */
-            this.target = newTarget;
-
-            /*
-                TODO: Just in case, I'm constructing new objects so, for
-                example, `origin` isn't updated when the `position` is
-                (i.e. a manual deep copy). Can this be cleaner?
-            */
-
-            /*
-                Copy the target entity's trajectory so we can compare it
-                later and detect changes.
-            */
-            this.targetTrajectory = {
-                origin: { x: newOrigin.x, y: newOrigin.y },
-                destination: { x: newDestination.x, y: newDestination. y},
-                elapsed: 0,
-                duration: newTrajectory.duration,
-            };
-
-            /*
-                Now for the actual trajectory that the paddle will be
-                complete.
-            */
-            this.actualTrajectory = {
-                origin: { x: this.position.x, y: this.position.y },
-                destination: { x: newDestination.x, y: newDestination.y },
-                elapsed: 0,
-                duration: newTrajectory.duration,
-            };
-
-            /*
-                First we move the destination a bit so the it's center of
-                the paddle what reaches said destination, instead of the
-                paddle's top border (which is the paddle's actual "position").
-            */
-            this.actualTrajectory.destination.y -= this.dimensions.height / 2;
-        }
-    }
-
-    /*
-        Returns a trajectory tracking the specified `target`.
-        TODO: Fix, complete, check.
-    */
-    getTargetTrajectory(target) {
-        switch (target) {
-            case BotPaddleTargets.NONE:
-                return {
-                    origin: { x: NaN, y: NaN },
-                    destination: { x: NaN, y: NaN },
-                    elapsed: NaN,
-                    duration: NaN,
-                };
-            case BotPaddleTargets.BALL:
-                return this.ball.getTrajectory();
-            case BotPaddleTargets.CENTER:
-                /* TODO: 500 is just a placeholder for a more adequate number. */
-                return {
-                    origin: { x: this.position.x, y: this.position.y },
-                    destination: { x: 50, y: 50 },
-                    elapsed: 0,
-                    duration: 500,
-                };
-        }
     }
 
     /*
