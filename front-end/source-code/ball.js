@@ -10,7 +10,7 @@ export class Ball {
         Establishes where the ball is, as well as its initial direction and
         speed.
     */
-    constructor(position, speed, direction, game, render) {
+    constructor(position, speed, direction, game, render, paddles) {
         /* Information about movement. */
         this.position = position;
         this.speed = speed;
@@ -30,19 +30,10 @@ export class Ball {
             duration: NaN,
         };
 
+        this.paddles = paddles;
+
         /* Calculate the ball's trajectory for the first time. */
         this.predict();
-    }
-
-    /*
-        Helper method to solve the circular reference between `Ball` objects
-        and `Paddle` objects.
-
-        NOTE: It doesn't solve it, it just ALLOWS the circular reference.
-    */
-    hackyPlugPaddles(paddles) {
-        /* Paddles that this ball can collide with. */
-        this.paddles = paddles;
     }
 
     /*
