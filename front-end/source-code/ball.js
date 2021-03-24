@@ -235,7 +235,10 @@ export class Ball {
     getVelocity() {
         return {
             x: this.speed * Math.cos(this.direction),
-            y: this.speed * Math.sin(this.direction),
+            // NOTE: Velocity on the Y axis is made its own opposite to match
+            // the reference axis, where a larger Y value means that the
+            // object is lower - instead of higher - on the screen.
+            y: this.speed * Math.sin(this.direction) * -1,
         };
     }
 
