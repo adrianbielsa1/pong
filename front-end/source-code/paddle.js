@@ -173,6 +173,33 @@ export class BotPaddle extends Paddle {
         if (this.position.y + this.dimensions.height > 100) { this.position.y = 100 - this.dimensions.height; }
     }
 
+    // TODO: Embelish.
+    handleBallTrajectoryChange(ball) {
+        const relativeDistanceVariation = this.getRelativeDistanceVariationWithBall(ball);
+
+        if (relativeDistanceVariation < 0) {
+            this.targetTrajectory = ball.getTrajectory();
+
+            this.actualTrajectory = {
+                origin: { x: this.position.x, y: this.position.y },
+                destination: { x: this.targetTrajectory.destination.x, y: this.targetTrajectory.destination.y - this.dimensions.height / 2 },
+                elapsed: 0, //this.targetTrajectory.elapsed,
+                duration: this.targetTrajectory.duration,
+            }
+        } else {
+            this.targetTrajectory = {
+                origin: { x: this.position.x, y: this.position.y },
+                /* TODO: `x` shouldn't be 50. */
+                destination: { x: 50, y: 50 },
+                elapsed: 0,
+                duration: 500,//0,
+            };
+
+            // TODO: Make a copy?
+            this.actualTrajectory = this.targetTrajectory;
+        }
+    }
+
     /*
         Returns the distance variation between the ball and the paddle.
         This value represents the behavior of the distance between the objects
