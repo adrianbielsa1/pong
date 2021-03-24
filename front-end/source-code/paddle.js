@@ -297,15 +297,15 @@ export class BotPaddle extends Paddle {
 
         TODO: Find a better name?
     */
-    getRelativeDistanceVariationWithBall() {
+    getRelativeDistanceVariationWithBall(ball) {
         const relativeVelocity = {
-            x: this.ball.getVelocity().x - 0, /* 0 is the paddle's velocity on X. */
-            y: this.ball.getVelocity().y - 0, /* 0 is the paddle's velocity on Y. */
+            x: ball.getVelocity().x - 0, /* 0 is the paddle's velocity on X. */
+            y: ball.getVelocity().y - 0, /* 0 is the paddle's velocity on Y. */
         };
 
         const relativePosition = {
-            x: this.ball.getPosition().x - this.position.x,
-            y: this.ball.getPosition().y - this.position.y,
+            x: ball.getPosition().x - this.position.x,
+            y: ball.getPosition().y - this.position.y,
         };
 
         /*
