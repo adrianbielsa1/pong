@@ -106,12 +106,9 @@ export class BotPaddle extends Paddle {
         Extending the `Paddle`'s constructor, a `Ball` object must be given
         so the computer's paddle can track its position to collide with it.
     */
-    constructor(position, dimensions, render, ball) {
+    constructor(position, dimensions, render) {
         /* Invoke our parent's constructor. */
         super(position, dimensions, render);
-
-        /* Ball to track (when it is the target). */
-        this.ball = ball;
 
         /* What the paddle is currently following. */
         this.target = BotPaddleTargets.NONE;
