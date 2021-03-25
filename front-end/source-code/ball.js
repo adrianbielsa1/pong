@@ -165,8 +165,8 @@ export class Ball {
     /* Changes the course of movement of the ball on the specified axes. */
     reflect(x, y) {
         if (x) {
-            /* TODO: Limit this to `Math.PI * 2` (maximum). */
             this.direction += Math.PI;
+            this.direction %= Math.PI * 2;
         }
 
         if (y) {
