@@ -111,7 +111,6 @@ export class Game {
     /* Updates all entities, executing actions like movement. */
     update(deltaTime) {
         this.ball.update(deltaTime);
-        this.paddles.forEach(paddle => paddle.update(deltaTime));
     }
 
     /*

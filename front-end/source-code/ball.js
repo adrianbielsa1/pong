@@ -217,6 +217,9 @@ export class Ball {
             `deltaTime` every time it is used.
         */
         this.trajectory.duration = lowestRemainingTime * 1000;
+
+        // Notify the paddles that the ball's trajectory has changed.
+        this.paddles.forEach(p => p.handleBallTrajectoryChange(this));
     }
 
     /* Returns this ball's position. */
