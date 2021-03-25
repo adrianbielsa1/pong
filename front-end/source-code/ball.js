@@ -56,30 +56,69 @@ export class Ball {
         the appropriate events if something happens, such as a collision.
     */
     updatePosition(deltaTime) {
-        if (this.trajectory.elapsed + deltaTime > this.trajectory.duration) {
-            /*
-                If we calculate this movement, the ball would go off-screen
-                without colliding with the paddles and/or being reflected.
-                Thus, we split the movement into two parts: first, the
-                ball is moved to its predicted destination, collisions are
-                checked normally and the ball is reflected if needed. Then
-                we proceed with the movement time that's left, as if it were
-                a completely unrelated movement.
-            */
+        while (deltaTime > 0) {
+            // How long until we reach our target.
             const remainingTime = this.trajectory.duration - this.trajectory.elapsed;
 
-            this.updatePosition(remainingTime);
-            this.updatePosition(deltaTime - remainingTime);
+            // The `movementTime` will be, at most, the `remainingTime`.
+            // Otherwise, the ball would move beyond its target.
+            const movementTime = remainingTime > deltaTime ? deltaTime : remainingTime;
+
+            // Where the ball will be once this movement is over.
+            const futurePosition = this.getFuturePosition(movementTime);
+
+            // A line from the ball's current position to the ball's future
+            // position.
+            const segment = {
+                start: this.position,
+                end: futurePosition,
+            };
+
+            // Move all paddles towards their target.
+            this.paddles.forEach(p => p.updatePosition(movementTime));
+
+            // Count this movement.
+            this.trajectory.elapsed += movementTime;
+
+            // Get paddles that might collide with the ball.
+            const collidablePaddles = this.paddles.filter(p => {
+                const rectangle = p.getRectangle();
+
+                return this.collidesWith(segment, rectangle);
+            });
+
+            if (collidablePaddles.length > 0) {
+                // There is at least one paddle that might collide with the
+                // ball. We act as if only one of them collides.
+                //
+                // TODO: Consider not only one but all of the collidable
+                // paddles?
+                this.reflect(true, true);
+                this.predict();
+            } else {
+                // See if the ball has reached one of the borders of the
+                // screen.
+                if (futurePosition.x == 0) {
+                    this.game.score(GameSides.RIGHT);
+                    this.reset();
+                } else if (futurePosition.x == 100) {
+                    this.game.score(GameSides.LEFT);
+                    this.reset();
+                } else if (futurePosition.y == 0 || futurePosition.y == 100) {
+                    // TODO: For now, we'll simply reflect the ball whenever it
+                    // reaches one of the vertical borders of the screen.
+                    this.reflect(false, true);
+                    this.predict();
+                }
+            }
+
+            // We've processed this movement, discount it from the frame's
+            // time.
+            deltaTime -= movementTime;
         }
 
-        /* Update movement's elapsed time. */
-        this.trajectory.elapsed += deltaTime;
-
-        /*
-            How much progress has been made (0 means no progress, 1 means the
-            trajectory is complete).
-        */
-        const progress = (this.trajectory.elapsed / this.trajectory.duration);
+        // Move the ball towards its target.
+        const progress = this.trajectory.elapsed / this.trajectory.duration;
         const distance = {
             x: (this.trajectory.destination.x - this.trajectory.origin.x),
             y: (this.trajectory.destination.y - this.trajectory.origin.y)
@@ -88,13 +127,6 @@ export class Ball {
         /* Linear movement. */
         this.position.x = this.trajectory.origin.x + distance.x * progress;
         this.position.y = this.trajectory.origin.y + distance.y * progress;
-
-        /*
-            Bounce the ball if it crashes with a paddle and make sure it
-            doesn't go off-screen.
-        */
-        this.checkForCollisions();
-        this.checkForBorders();
     }
 
     // Returns either `true` or `false`, depending if the given line `segment`
