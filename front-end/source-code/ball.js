@@ -188,4 +188,20 @@ export class Ball {
             duration: this.trajectory.duration,
         };
     }
+
+    // Returns the position of the ball as if `time` milliseconds would have
+    // passed since its last movement. The returned position might go beyond
+    // the screen's borders.
+    getFuturePosition(time) {
+        const progress = (this.trajectory.elapsed + time) / this.trajectory.duration;
+        const distance = {
+            x: (this.trajectory.destination.x - this.trajectory.origin.x),
+            y: (this.trajectory.destination.y - this.trajectory.origin.y)
+        };
+        
+        return {
+            x: this.trajectory.origin.x + distance.x * progress,
+            y:this.trajectory.origin.y + distance.y * progress,
+        };
+    }
 }
