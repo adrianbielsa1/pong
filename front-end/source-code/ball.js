@@ -1,4 +1,5 @@
 import { Game, GameSides } from "./game.js";
+import { Collision } from "./collision.js";
 
 /*
     The paddle is one of the main entities of the Pong. It moves from side
@@ -94,6 +95,33 @@ export class Ball {
         */
         this.checkForCollisions();
         this.checkForBorders();
+    }
+
+    // Returns either `true` or `false`, depending if the given line `segment`
+    // intersects with one of the `rectangle`'s sides.
+    collidesWith(segment, rectangle) {
+        // A little bit of sugar to shorten the following lines.
+        const topLeft = { x: rectangle.left, y: rectangle.top };
+        const topRight = { x: rectangle.right, y: rectangle.top };
+        const bottomLeft = { x: rectangle.left, y: rectangle.bottom };
+        const bottomRight = { x: rectangle.right, y: rectangle.bottom };
+
+        // Define each side of the rectangle as a set of two points - i.e.
+        // a line segment.
+        const rectangleSegments = [
+            { start: topLeft, end: bottomLeft },
+            { start: topLeft, end: topRight },
+            { start: topRight, end: bottomRight },
+            { start: bottomLeft, end: bottomRight },
+        ];
+
+        for (const rectangleSegment of rectangleSegments) {
+            if (Collision.lineToLine(segment.start, segment.end, rectangleSegment.start, rectangleSegment.end)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     reset() {
