@@ -205,6 +205,11 @@ export class Ball {
             y: Math.round(this.position.y + velocity.y * lowestRemainingTime)
         };
 
+        if (this.trajectory.destination.x < 0) { this.trajectory.destination.x = 0; }
+        if (this.trajectory.destination.x > 100) { this.trajectory.destination.x = 100; }
+        if (this.trajectory.destination.y < 0) { this.trajectory.destination.y = 0; }
+        if (this.trajectory.destination.y > 100) { this.trajectory.destination.y = 100; }
+
         this.trajectory.elapsed = 0;
 
         /*
