@@ -16,7 +16,7 @@ export class Render {
     }
 
     /* Displays text on the screen. */
-    text(position, size, color, contents, font) {
+    text(position, size, color, contents, font, alignment) {
 
     }
 }
@@ -88,7 +88,7 @@ export class CanvasRender {
     }
 
     /* Displays text on the screen. */
-    text(position, size, color, contents, font) {
+    text(position, size, color, contents, font, alignment) {
         /* Transform percentages into pixels. */
         const positionInPixels = {
             x: position.x * this.canvas.width / 100,
@@ -102,8 +102,9 @@ export class CanvasRender {
         */
         this.canvasContext.font = size * window.innerWidth + "px " + font;
 
-        /* Change color. */
+        /* Change color and text alignment. */
         this.canvasContext.fillStyle = color;
+        this.canvasContext.textAlign = alignment;
 
         /* Display. */
         this.canvasContext.fillText(contents, positionInPixels.x, positionInPixels.y);

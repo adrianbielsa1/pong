@@ -96,11 +96,11 @@ export class Game {
 
         /* Draw scores. */
         this.render.text(
-            { x: 10, y: 50 }, 0.1, "red", this.scores[GameSides.LEFT], "Arial"
+            { x: 10, y: 50 }, 0.1, "red", this.scores[GameSides.LEFT], "Arial", "center"
         );
 
         this.render.text(
-            { x: 90, y: 50 }, 0.1, "red", this.scores[GameSides.RIGHT], "Arial"
+            { x: 90, y: 50 }, 0.1, "red", this.scores[GameSides.RIGHT], "Arial", "center"
         );
 
         /* Draw all objects. */
