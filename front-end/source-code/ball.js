@@ -157,8 +157,32 @@ export class Ball {
     }
 
     reset() {
+        // Get the ball in the middle of the screen and give it a new direction.
         this.position = { x: 50, y: 50 };
         this.direction = Game.random(0, 2 * Math.PI);
+
+        // Array of directions that would cause the ball to (probably) bounce
+        // indefinitely, without changing its direction in a noticeable manner.
+        const loopingDirections = [
+            0, // Straight to the right.
+            Math.PI / 2, // Straight up.
+            Math.PI, // Straight to the left.
+            3 * Math.PI / 2, // Straight down.
+        ];
+
+        // How close to a looping direction we can be.
+        const epsilon = 0.1;
+
+        for (loopingDirection of loopingDirections) {
+            if (Math.abs(this.direction - loopingDirection) < epsilon) {
+                // NOTE: I use twice the `epsilon` value just to be sure
+                // in case the difference would have been negative.
+                this.direction += epsilon * 2;
+                break;
+            }
+        }
+
+        // Update the ball's trajectory according to the new direction.
         this.predict();
     }
 
