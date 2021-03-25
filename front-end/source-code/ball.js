@@ -173,7 +173,7 @@ export class Ball {
         // How close to a looping direction we can be.
         const epsilon = 0.1;
 
-        for (loopingDirection of loopingDirections) {
+        for (const loopingDirection of loopingDirections) {
             if (Math.abs(this.direction - loopingDirection) < epsilon) {
                 // NOTE: I use twice the `epsilon` value just to be sure
                 // in case the difference would have been negative.
