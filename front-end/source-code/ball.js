@@ -1,29 +1,25 @@
 import { Game, GameSides } from "./game.js";
 import { Collision } from "./collision.js";
 
-/*
-    The paddle is one of the main entities of the Pong. It moves from side
-    to side with increasing speed, until a paddle fails to stop it, making
-    the game end.
-*/
+// The paddle is one of the main entities of the Pong. It moves from side
+// to side with increasing speed, until a paddle fails to stop it, making
+// the game end.
 export class Ball {
-    /*
-        Establishes where the ball is, as well as its initial direction and
-        speed.
-    */
+    // Establishes where the ball is, as well as its initial direction and
+    // speed.
     constructor(position, speed, direction, game, render, paddles) {
-        /* Information about movement. */
+        // Information about movement.
         this.position = position;
         this.speed = speed;
         this.direction = direction;
 
-        /* Used to notify about scoring events. */
+        // Used to notify about scoring events.
         this.game = game;
 
-        /* Used to draw the ball on the screen. */
+        // Used to draw the ball on the screen.
         this.render = render;
 
-        /* Information about the ball's movement. */
+        // Information about the ball's movement.
         this.trajectory = {
             origin: { x: NaN, y: NaN },
             destination: { x: NaN, y: NaN },
@@ -33,28 +29,24 @@ export class Ball {
 
         this.paddles = paddles;
 
-        /* Calculate the ball's trajectory for the first time. */
+        // Calculate the ball's trajectory for the first time.
         this.predict();
     }
 
-    /*
-        Displays the ball on the screen, using a `Render` object to do the
-        job.
-    */
+    // Displays the ball on the screen, using a `Render` object to do the
+    // job.
     draw() {
         /* TODO: Check radius. */
         this.render.circle(this.position, 7, this.render.theme.ball());
     }
 
-    /* Updates the ball, applying actions like moving it. */
+    // Updates the ball, applying actions like moving it.
     update(deltaTime) {
         this.updatePosition(deltaTime);
     }
 
-    /*
-        Changes the ball's position, moving it across the screen and raising
-        the appropriate events if something happens, such as a collision.
-    */
+    // Changes the ball's position, moving it across the screen and raising
+    // the appropriate events if something happens, such as a collision.
     updatePosition(deltaTime) {
         while (deltaTime > 0) {
             // How long until we reach our target.
@@ -186,7 +178,7 @@ export class Ball {
         this.predict();
     }
 
-    /* Changes the course of movement of the ball on the specified axes. */
+    // Changes the course of movement of the ball on the specified axes.
     reflect(x, y) {
         if (x) {
             this.direction += Math.PI;
@@ -198,12 +190,12 @@ export class Ball {
         }
     }
 
-    /* Calculates the current trajectory of the ball until it reaches a border. */
+    // Calculates the current trajectory of the ball until it reaches a border.
     predict() {
-        /* A little bit of sugar. */
+        // A little bit of sugar so the following lines are shorter.
         const velocity = this.getVelocity();
 
-        /* List of time left to collide with each border. */
+        // List of time left to collide with each border.
         const remainingTimes = [
             (0 - this.position.x) / velocity.x, /* Left wall. */
             (100 - this.position.x) / velocity.x, /* Right wall. */
@@ -211,12 +203,10 @@ export class Ball {
             (100 - this.position.y) / velocity.y, /* Bottom wall. */
         ];
 
-        /*
-            Negative times are discarded since they would mean going back
-            (reversing the movement), while zero-time-left collisions are
-            also discarded since it would mean colliding with the border
-            we're on.
-        */
+        // Negative times are discarded since they would mean going back
+        // (reversing the movement), while zero-time-left collisions are
+        // also discarded since it would mean colliding with the border
+        // we're on.
         const positiveRemainingTimes = remainingTimes.filter(t => t > 0);
         const lowestRemainingTime = Math.min(...positiveRemainingTimes);
 
@@ -236,17 +226,15 @@ export class Ball {
 
         this.trajectory.elapsed = 0;
 
-        /*
-            Convert the duration to milliseconds so we don't need to convert
-            `deltaTime` every time it is used.
-        */
+        // Convert the duration to milliseconds so we don't need to convert
+        // `deltaTime` every time it is used.
         this.trajectory.duration = lowestRemainingTime * 1000;
 
         // Notify the paddles that the ball's trajectory has changed.
         this.paddles.forEach(p => p.handleBallTrajectoryChange(this));
     }
 
-    /* Returns this ball's position. */
+    // Returns this ball's position.
     getPosition() {
         return {
             x: this.position.x,
@@ -254,7 +242,7 @@ export class Ball {
         };
     }
 
-    /* Returns this ball's velocity. */
+    // Returns this ball's velocity.
     getVelocity() {
         return {
             x: this.speed * Math.cos(this.direction),
@@ -265,7 +253,7 @@ export class Ball {
         };
     }
 
-    /* Returns this ball's trajectory. */
+    // Returns this ball's trajectory.
     getTrajectory() {
         return {
             origin: {
@@ -290,7 +278,7 @@ export class Ball {
             x: (this.trajectory.destination.x - this.trajectory.origin.x),
             y: (this.trajectory.destination.y - this.trajectory.origin.y)
         };
-        
+
         return {
             x: this.trajectory.origin.x + distance.x * progress,
             y:this.trajectory.origin.y + distance.y * progress,

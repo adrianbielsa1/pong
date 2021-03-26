@@ -4,7 +4,7 @@ export class Collision {
     // by two points. The first segment is defined by points A and B, while
     // the second is defined by points C and D.
     //
-    // CREDITS: David Gouveia's answer at the `https://gamedev.stackexchange.com`
+    // CREDITS: David Gouveia's answer at the `gamedev.stackexchange.com`
     // website.
     //
     // TODO: Find better names for the variables.
