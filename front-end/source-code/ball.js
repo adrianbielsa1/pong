@@ -116,7 +116,7 @@ export class Ball {
             y: (this.trajectory.destination.y - this.trajectory.origin.y)
         };
 
-        /* Linear movement. */
+        // Linear movement.
         this.position.x = this.trajectory.origin.x + distance.x * progress;
         this.position.y = this.trajectory.origin.y + distance.y * progress;
     }
