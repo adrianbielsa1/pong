@@ -1,7 +1,6 @@
-import { Ball } from "./ball.js";
-import { BotPaddle, PlayerPaddle } from "./paddle.js";
 import { CanvasRender } from "./render.js";
 import { WindowKeyboard } from "./keyboard.js";
+import { IngameScreen } from "./screen.js";
 
 // The game is a container of all the elements that make up the Pong
 // itself. It serves the purpose of preparing, running and terminating
@@ -27,30 +26,12 @@ export class Game {
             this.scores[sideValue] = 0;
         }
 
-        // Generate a random initial angle for the ball, and give it
-        // an initial speed.
-
-        // NOTE: Since `Math.random` isn't actually random, it's very
-        // likely that reloading the page over and over will yield
-        // the same sequence of random numbers.
-
-        // NOTE: This is just a commodity so I can remember better
-        // what is the meaning of each value, since Javascript doesn't
-        // support named parameters (as of the time of writing).
-        const ballDirection = Game.random(0, 2 * Math.PI);
-        const ballSpeed = 25;
-
-        this.paddles = [
-            new PlayerPaddle({ x: 0, y: 50 }, { width: 0.25, height: 10 }, this.render, this.keyboard),
-            // new PlayerPaddle({ x: 0, y: 20 }, { width: 1, height: 10 }, this.render),
-            // TODO: "7" is just a placeholder number.
-            new BotPaddle({ x: 99.75, y: 50 }, { width: 0.25, height: 10 }, this.render, 7),
-        ];
-
-        this.ball = new Ball({ x: 50, y: 50 }, ballSpeed, ballDirection, this, this.render, this.paddles);
-
         // To be notified when the tab's visiblity changes.
         document.addEventListener("visibilitychange", this.handleVisibilityChange.bind(this), false);
+
+        // Keeps track of the current screen being shown, which might change
+        // during the course of the game.
+        this.currentScreen = new IngameScreen(this);
     }
 
     // Updates the game continuously.
@@ -84,26 +65,12 @@ export class Game {
 
     // Displays all entities on the screen.
     draw() {
-        // Remove the previous frame from the screen.
-        this.render.clear(this.render.theme.background());
-
-        // Draw scores.
-        this.render.text(
-            { x: 10, y: 50 }, 0.1, "red", this.scores[GameSides.LEFT], "Arial", "center"
-        );
-
-        this.render.text(
-            { x: 90, y: 50 }, 0.1, "red", this.scores[GameSides.RIGHT], "Arial", "center"
-        );
-
-        // Draw all objects.
-        this.ball.draw();
-        this.paddles.forEach(paddle => paddle.draw());
+        this.currentScreen.draw();
     }
 
     // Updates all entities, executing actions like movement.
     update(deltaTime) {
-        this.ball.update(deltaTime);
+        this.currentScreen.update(deltaTime);
     }
 
     // Increases the points of one of the paddles. Called when the ball
