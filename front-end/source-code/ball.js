@@ -87,6 +87,8 @@ export class Ball {
                 // paddles?
                 this.reflect(true, true);
                 this.predict();
+
+                this.speed += 2.5;
             } else {
                 // See if the ball has reached one of the borders of the
                 // screen.
