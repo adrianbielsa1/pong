@@ -13,6 +13,16 @@ export class Render {
 
     }
 
+    // Paints a image on the screen.
+    image(data, position, dimensions) {
+
+    }
+
+    // Paints a line segment on the screen.
+    segment(start, end, color, thickness) {
+        
+    }
+
     // Displays text on the screen.
     text(position, size, color, contents, font, alignment) {
 
@@ -79,6 +89,55 @@ export class CanvasRender {
             positionInPixels.x, positionInPixels.y, radius, 0, Math.PI * 2
         );
         this.canvasContext.fill();
+    }
+
+    // Paints a image on the screen.
+    image(data, position, dimensions) {
+        // Transform percentages into pixels.
+        const positionInPixels = {
+            x: position.x * this.canvas.width / 100,
+            y: position.y * this.canvas.height / 100
+        };
+
+        const dimensionsInPixels = {
+            width: dimensions.width * this.canvas.width / 100,
+            height: dimensions.height * this.canvas.height / 100
+        };
+
+        // Paint the image.
+        this.canvasContext.drawImage(
+            data,
+            positionInPixels.x, positionInPixels.y,
+            dimensionsInPixels.width, dimensionsInPixels.height
+        );
+    }
+
+    // Paints a line segment on the screen.
+    segment(start, end, color, thickness) {
+        // Transform percentages into pixels.
+        const startInPixels = {
+            x: start.x * this.canvas.width / 100,
+            y: start.y * this.canvas.height / 100
+        };
+
+        const endInPixels = {
+            x: end.x * this.canvas.width / 100,
+            y: end.y * this.canvas.height / 100
+        };
+
+        const thicknessInPixels = thickness * this.canvas.width / 100;
+
+        // Create a new path so it doesn't start from the previous one.
+        this.canvasContext.beginPath();
+
+        // Create line segment.
+        this.canvasContext.moveTo(startInPixels.x, startInPixels.y);
+        this.canvasContext.lineTo(endInPixels.x, endInPixels.y);
+
+        // Change color and thickness, and render segment.
+        this.canvasContext.strokeStyle = color;
+        this.canvasContext.lineWidth = thicknessInPixels;
+        this.canvasContext.stroke();
     }
 
     // Displays text on the screen.
