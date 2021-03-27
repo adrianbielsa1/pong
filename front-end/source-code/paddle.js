@@ -93,9 +93,6 @@ export class BotPaddle extends Paddle {
         // Invoke our parent's constructor.
         super(position, dimensions, render);
 
-        // What the paddle is currently following.
-        this.target = BotPaddleTargets.NONE;
-
         // The distinction about the trajectory of the entity being tracked
         // and actual trajectory that the paddle is following is useful
         // because the paddle might have a variation compared to the tracked
@@ -203,16 +200,3 @@ export class BotPaddle extends Paddle {
         return (relativeVelocity.x * relativePosition.x); // + (relativeVelocity.y * relativePosition.y);
     }
 }
-
-// List of all possible "entities" or "locations" that the paddle might
-// track.
-const BotPaddleTargets = {
-    NONE: 0,
-    BALL: 1,
-    CENTER: 2,
-};
-
-// Freeze the object so its properties cannot be modified.
-//
-// TODO: Can't this be just `BotPaddleTargets.freeze()`?
-Object.freeze(BotPaddleTargets);
