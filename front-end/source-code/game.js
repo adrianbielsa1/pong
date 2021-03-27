@@ -123,6 +123,18 @@ export class Game {
         }
     }
 
+    // Returns a fully-constructed `Render` object which can be used to
+    // display shapes on the screen.
+    getRender() {
+        return this.render;
+    }
+
+    // Returns a fully-constructed `Keyboard` object which can be used to
+    // gather input from the player.
+    getKeyboard() {
+        return this.keyboard;
+    }
+
     // Helper function to get a random number between two values.
     //
     // CREDITS: The `developer.mozilla.org` website.
