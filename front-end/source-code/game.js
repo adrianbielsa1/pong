@@ -43,7 +43,8 @@ export class Game {
         this.paddles = [
             new PlayerPaddle({ x: 0, y: 50 }, { width: 0.25, height: 10 }, this.render, this.keyboard),
             // new PlayerPaddle({ x: 0, y: 20 }, { width: 1, height: 10 }, this.render),
-            new BotPaddle({ x: 99.75, y: 50 }, { width: 0.25, height: 10 }, this.render, this.ball),
+            // TODO: "7" is just a placeholder number.
+            new BotPaddle({ x: 99.75, y: 50 }, { width: 0.25, height: 10 }, this.render, 7),
         ];
 
         this.ball = new Ball({ x: 50, y: 50 }, ballSpeed, ballDirection, this, this.render, this.paddles);

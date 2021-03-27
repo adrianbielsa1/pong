@@ -1,3 +1,4 @@
+import { Game } from "./game.js";
 import { KeyboardKeys } from "./keyboard.js";
 
 // The paddle is one of the main entities of the Pong. It can be either
@@ -89,9 +90,13 @@ export class PlayerPaddle extends Paddle {
 export class BotPaddle extends Paddle {
     // Extending the `Paddle`'s constructor, a `Ball` object must be given
     // so the computer's paddle can track its position to collide with it.
-    constructor(position, dimensions, render) {
+    constructor(position, dimensions, render, inaccuracy) {
         // Invoke our parent's constructor.
         super(position, dimensions, render);
+
+        // Possible displacement with respect to the expected ball's
+        // destination.
+        this.inaccuracy = inaccuracy;
 
         // The distinction about the trajectory of the entity being tracked
         // and actual trajectory that the paddle is following is useful
@@ -156,10 +161,15 @@ export class BotPaddle extends Paddle {
 
             this.actualTrajectory = {
                 origin: { x: this.position.x, y: this.position.y },
-                destination: { x: this.targetTrajectory.destination.x, y: this.targetTrajectory.destination.y - this.dimensions.height / 2 },
+                destination: { x: this.targetTrajectory.destination.x, y: this.targetTrajectory.destination.y },
                 elapsed: 0, // this.targetTrajectory.elapsed,
                 duration: this.targetTrajectory.duration,
             }
+
+            // Subtract half of the paddle's dimensions so the ball reaches its
+            // center instead of the paddle's top segment.
+            this.actualTrajectory.destination.y -= this.dimensions.height / 2;
+            this.actualTrajectory.destination.y += Game.random(-this.inaccuracy, this.inaccuracy);
         } else {
             this.targetTrajectory = {
                 origin: { x: this.position.x, y: this.position.y },
