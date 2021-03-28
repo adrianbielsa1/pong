@@ -7,17 +7,15 @@ import { Collision } from "./collision.js";
 export class Ball {
     // Establishes where the ball is, as well as its initial direction and
     // speed.
-    constructor(position, speed, direction, game, render, paddles) {
+    constructor(position, speed, direction, game, paddles) {
         // Information about movement.
         this.position = position;
         this.speed = speed;
         this.direction = direction;
 
-        // Used to notify about scoring events.
+        // Used to notify about scoring events and render the ball on
+        // the screen.
         this.game = game;
-
-        // Used to draw the ball on the screen.
-        this.render = render;
 
         // Information about the ball's movement.
         this.trajectory = {
@@ -36,8 +34,10 @@ export class Ball {
     // Displays the ball on the screen, using a `Render` object to do the
     // job.
     draw() {
+        const render = this.game.getRender();
+
         /* TODO: Check radius. */
-        this.render.circle(this.position, 7, this.render.theme.ball());
+        render.circle(this.position, 7, render.theme.ball());
     }
 
     // Updates the ball, applying actions like moving it.

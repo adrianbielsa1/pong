@@ -4,23 +4,23 @@ import { KeyboardKeys } from "./keyboard.js";
 // The paddle is one of the main entities of the Pong. It can be either
 // player-controlled or computer-controlled.
 export class Paddle {
-    // Establishes where the paddle is, as well as its dimensions, and
-    // links a `Render` object to draw it.
-    constructor(position, dimensions, render) {
+    // Establishes where the paddle is, as well as its dimensions.
+    constructor(position, dimensions, game) {
         // A paddle is represented by a rectangle, expressed in %s
         // of the `Render`'s dimensions, which the `Render` itself
         // converts to pixels later on.
         this.position = position;
         this.dimensions = dimensions;
 
-        // Used to draw the paddle on the screen.
-        this.render = render;
+        this.game = game;
     }
 
     // Displays this paddle on the screen, using a `Render` object to do
     // the job.
     draw() {
-        this.render.rectangle(this.position, this.dimensions, this.render.theme.paddle());
+        const render = this.game.getRender();
+
+        render.rectangle(this.position, this.dimensions, render.theme.paddle());
     }
 
     // Called when the ball changes its trajectory so the paddle can respond
@@ -46,12 +46,9 @@ export class Paddle {
 export class PlayerPaddle extends Paddle {
     // Extending the `Paddle`'s constructor, a `Keyboard` object must be given
     // so the player can control this paddle's position.
-    constructor(position, dimensions, render, keyboard) {
+    constructor(position, dimensions, game) {
         // Invoke our parent's constructor.
-        super(position, dimensions, render);
-
-        // Reference to the keyboard.
-        this.keyboard = keyboard;
+        super(position, dimensions, game);
     }
 
     // Calls more specialized functions in charge of updating the components
@@ -70,9 +67,11 @@ export class PlayerPaddle extends Paddle {
 
         const deltaTimeInSeconds = deltaTime / 1000;
 
+        const keyboard = this.game.getKeyboard();
+
         // Check for each arrow key and move accordingly.
-        if (this.keyboard.isPressed(KeyboardKeys.UP)) { this.position.y -= velocity.y * deltaTimeInSeconds; }
-        if (this.keyboard.isPressed(KeyboardKeys.DOWN)) { this.position.y += velocity.y * deltaTimeInSeconds; }
+        if (keyboard.isPressed(KeyboardKeys.UP)) { this.position.y -= velocity.y * deltaTimeInSeconds; }
+        if (keyboard.isPressed(KeyboardKeys.DOWN)) { this.position.y += velocity.y * deltaTimeInSeconds; }
 
         // OLD: Horizontal movement.
         // if (this.keyboard.isPressed(KeyboardKeys.LEFT)) { this.position.x -= velocity.x * deltaTimeInSeconds; }
@@ -90,9 +89,9 @@ export class PlayerPaddle extends Paddle {
 export class BotPaddle extends Paddle {
     // Extending the `Paddle`'s constructor, a `Ball` object must be given
     // so the computer's paddle can track its position to collide with it.
-    constructor(position, dimensions, render, inaccuracy) {
+    constructor(position, dimensions, game, inaccuracy) {
         // Invoke our parent's constructor.
-        super(position, dimensions, render);
+        super(position, dimensions, game);
 
         // Possible displacement with respect to the expected ball's
         // destination.

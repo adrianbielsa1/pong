@@ -44,22 +44,16 @@ export class IngameScreen extends Screen {
 
         // Create paddles.
         this.paddles = [
-            new PlayerPaddle(
-                { x: 0, y: 50 }, paddleDimension,
-                this.game.getRender(), this.game.getKeyboard()
-            ),
+            new PlayerPaddle({ x: 0, y: 50 }, paddleDimension, this.game),
 
             // TODO: "7" is just a placeholder number.
-            new BotPaddle(
-                { x: 99.75, y: 50 }, paddleDimension,
-                this.game.getRender(), 7
-            ),
+            new BotPaddle({ x: 99.75, y: 50 }, paddleDimension, this.game, 7),
         ];
 
         // Create ball.
         this.ball = new Ball(
             ballPosition, ballSpeed, ballDirection,
-            this.game, this.game.getRender(), this.paddles
+            this.game, this.paddles
         );
     }
 
