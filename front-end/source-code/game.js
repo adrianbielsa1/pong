@@ -1,6 +1,6 @@
 import { CanvasRender } from "./render.js";
 import { WindowKeyboard } from "./keyboard.js";
-import { IngameScreen } from "./screen.js";
+import { IngameScreen, MenuScreen } from "./screen.js";
 
 // The game is a container of all the elements that make up the Pong
 // itself. It serves the purpose of preparing, running and terminating
@@ -31,7 +31,7 @@ export class Game {
 
         // Keeps track of the current screen being shown, which might change
         // during the course of the game.
-        this.currentScreen = new IngameScreen(this);
+        this.currentScreen = new MenuScreen(this);
     }
 
     // Updates the game continuously.

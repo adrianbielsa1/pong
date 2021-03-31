@@ -18,6 +18,39 @@ export class Screen {
     }
 };
 
+// A screen where the player can change the game's difficulty, the side
+// they play, etc.
+export class MenuScreen extends Screen {
+    constructor(game) {
+        // Invoke our parent's constructor.
+        super();
+
+        // Store objects so we can use them later.
+        this.game = game;
+        this.images = new MenuScreenImages(game);
+
+        this.elements = [
+            { image: "left-arrow.png", position: { x: 35, y: 47.5 }, dimensions: { width: 3, height: 5.31 } },
+        ];
+    }
+
+    draw() {
+        const render = this.game.getRender();
+
+        // Remove the previous frame from the screen.
+        render.clear(render.theme.background());
+
+        for (const element of this.elements) {
+            const elementData = this.images.get(element.image);
+
+            // Ensure the image is loaded.
+            if (!(elementData === null)) {
+                render.image(elementData, element.position, element.dimensions);
+            }
+        }
+    }
+};
+
 // The screen where the player and the AI play against each other.
 export class IngameScreen extends Screen {
     constructor(game) {
