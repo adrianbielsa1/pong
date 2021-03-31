@@ -252,4 +252,14 @@ export class RenderTheme {
                 return "white";
         }
     }
+
+    // TODO: ...
+    getPath() {
+        switch (this.current()) {
+            case "light":
+                return "media/light-theme/";
+            case "dark":
+                return "media/dark-theme/";
+        }
+    }
 }
