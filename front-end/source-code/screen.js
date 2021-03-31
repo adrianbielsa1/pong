@@ -102,12 +102,17 @@ class MenuScreenImages {
     }
 
     store(image) {
-        this.images[image.src] = image;
+        // We do this because accessing the `src` property directly returns
+        // the absolute URL, including protocol (HTTP/HTTPS), website, and
+        // other characters we do not care about. This way, we only get the
+        // relative path.
+        const relativeImagePath = image.getAttribute("src");
+
+        this.images[relativeImagePath] = image;
     }
 
     get(imageName) {
-        // TODO: ...
-        const imagePath = "http://127.0.0.1:8080/" + this.game.getRender().theme.getPath() + imageName;
+        const imagePath = this.game.getRender().theme.getPath() + imageName;
 
         if (imagePath in this.images) {
             return this.images[imagePath];
