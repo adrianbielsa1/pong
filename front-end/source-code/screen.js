@@ -51,6 +51,76 @@ export class MenuScreen extends Screen {
     }
 };
 
+class MenuScreenImages {
+    constructor(game) {
+        // Store objects so we can use them later.
+        this.game = game;
+
+        // Load all images for the first time.
+        this.reload();
+    }
+
+    // Reloads several images that will be used to render different
+    // elements on the screen.
+    reload() {
+        // Sugar so we can call them when using the `map`/`forEach` functions.
+        const load = this.load.bind(this);
+        const store = this.store.bind(this);
+
+        const themePath = this.game.getRender().theme.getPath();
+
+        const imageNames = ["left-arrow.png", "right-arrow.png"];
+        const imagePaths = imageNames.map((name) => { return themePath + name; });
+
+        const imagePromises = imagePaths.map((path) => { return load(path); });
+
+        // Clear the map of images.
+        this.images = {};
+
+        // Store all images once they're loaded.
+        //
+        // NOTE: This does NOT wait until the images are loaded; they're loaded
+        // asynchronously.
+        Promise.all(imagePromises).then((images) => { images.forEach(store); });
+    }
+
+    // Begins the loading process of an image, returning a `Promise` object
+    // to track its state.
+    //
+    // CREDITS: User "ggorlen" from the "stackoverflow.com" website.
+    load(imageSource) {
+        return new Promise((resolve, reject) => {
+            const image = new Image();
+
+            // Prepare callbacks before loading the image.
+            image.onload = () => { return resolve(image); };
+            image.onerror = reject;
+
+            // Begin loading the image.
+            image.src = imageSource;
+        });
+    }
+
+    store(image) {
+        this.images[image.src] = image;
+    }
+
+    get(imageName) {
+        // TODO: ...
+        const imagePath = "http://127.0.0.1:8080/" + this.game.getRender().theme.getPath() + imageName;
+
+        if (imagePath in this.images) {
+            return this.images[imagePath];
+        } else {
+            // Being here means that - probably - the theme has changed
+            // and we don't have the images for said theme loaded yet,
+            // so we load them :)
+            this.reload();
+            return null;
+        }
+    }
+}
+
 // The screen where the player and the AI play against each other.
 export class IngameScreen extends Screen {
     constructor(game) {
