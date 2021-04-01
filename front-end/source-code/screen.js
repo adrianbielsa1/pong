@@ -49,6 +49,39 @@ export class MenuScreen extends Screen {
                 render.image(elementData, element.position, element.dimensions);
             }
         }
+
+        this.drawDifficultySelector();
+    }
+
+    // TODO: This function is very hardcoded.
+    drawDifficulty() {
+        // A little bit of sugar to make the following lines shorter.
+        const render = this.game.getRender();
+        const leftArrow = this.elements[0];
+        const rightArrow = this.elements[1];
+
+        const distanceBetweenArrows = {
+            x: Math.abs((leftArrow.position.x + leftArrow.dimensions.width) - rightArrow.position.x),
+            y: Math.abs(leftArrow.position.y - rightArrow.position.y),
+        };
+
+        const difficultyLevels = 5;
+
+        const rectangleDimensions = {
+            width: distanceBetweenArrows.x / (difficultyLevels * 2),
+            height: leftArrow.dimensions.height,
+        };
+
+        const currentPosition = {
+            x: leftArrow.position.x + leftArrow.dimensions.width + rectangleDimensions.width / 2,
+            y: leftArrow.position.y,
+        };
+
+        for (let index = 0; index < difficultyLevels; index += 1) {
+            render.rectangle(currentPosition, rectangleDimensions, "gray");
+
+            currentPosition.x += rectangleDimensions.width * 2;
+        }
     }
 };
 
