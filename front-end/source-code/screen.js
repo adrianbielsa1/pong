@@ -54,7 +54,7 @@ export class MenuScreen extends Screen {
     }
 
     // TODO: This function is very hardcoded.
-    drawDifficulty() {
+    drawDifficultySelector() {
         // A little bit of sugar to make the following lines shorter.
         const render = this.game.getRender();
         const leftArrow = this.elements[0];
