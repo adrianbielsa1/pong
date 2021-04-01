@@ -30,7 +30,8 @@ export class MenuScreen extends Screen {
         this.images = new MenuScreenImages(game);
 
         this.elements = [
-            { image: "left-arrow.png", position: { x: 35, y: 47.5 }, dimensions: { width: 3, height: 5.31 } },
+            { image: "left-arrow.png", position: { x: 38, y: 70 }, dimensions: { width: 2, height: 5 } },
+            { image: "right-arrow.png", position: { x: 60, y: 70 }, dimensions: { width: 2, height: 5 } },
         ];
     }
 
