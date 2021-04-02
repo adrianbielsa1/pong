@@ -182,14 +182,14 @@ export class IngameScreen extends Screen {
         //
         // TODO: Isn't kind of bad sharing the same dimensions for every
         // paddle? They should copy the object internally.
-        const paddleDimension = { width: 0.25, height: 10 };
+        const paddleDimension = { width: 0.5, height: 10 };
 
         // Create paddles.
         this.paddles = [
-            new PlayerPaddle({ x: 0, y: 50 }, paddleDimension, this.game),
+            new PlayerPaddle({ x: 0, y: 45 }, paddleDimension, this.game),
 
             // TODO: "7" is just a placeholder number.
-            new BotPaddle({ x: 99.75, y: 50 }, paddleDimension, this.game, 7),
+            new BotPaddle({ x: 99.75, y: 45 }, paddleDimension, this.game, 7),
         ];
 
         // Create ball.
