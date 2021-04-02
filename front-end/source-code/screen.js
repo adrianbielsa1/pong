@@ -223,4 +223,8 @@ export class IngameScreen extends Screen {
         // NOTE: The `Ball` object updates the paddles internally.
         this.ball.update(deltaTime);
     }
+
+    handleGameDifficultyChange() {
+        this.paddles.forEach(p => { p.handleGameDifficultyChange(); });
+    }
 };

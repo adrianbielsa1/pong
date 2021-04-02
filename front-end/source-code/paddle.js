@@ -29,6 +29,11 @@ export class Paddle {
 
     }
 
+    // Called when the game's difficulty changes.
+    handleGameDifficultyChange() {
+
+    }
+
     // Returns the paddle's rectangle, which can be used to check for
     // collisions.
     getRectangle() {
@@ -181,6 +186,13 @@ export class BotPaddle extends Paddle {
             // TODO: Make a copy?
             this.actualTrajectory = this.targetTrajectory;
         }
+    }
+
+    // TODO: Embelish.
+    handleGameDifficultyChange() {
+        const newDifficulty = this.game.getDifficulty().getCurrent();
+
+        this.inaccuracy = newDifficulty.inaccuracy;
     }
 
     // Returns the distance variation between the ball and the paddle.
