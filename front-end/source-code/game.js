@@ -71,6 +71,7 @@ export class Game {
 
     // Updates all entities, executing actions like movement.
     update(deltaTime) {
+        this.difficulty.update(deltaTime);
         this.currentScreen.update(deltaTime);
     }
 
