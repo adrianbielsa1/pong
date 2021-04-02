@@ -1,5 +1,5 @@
 import { CanvasRender } from "./render.js";
-import { WindowKeyboard } from "./keyboard.js";
+import { WindowKeyboard, KeyboardKeys } from "./keyboard.js";
 import { IngameScreen, MenuScreen } from "./screen.js";
 
 // The game is a container of all the elements that make up the Pong
@@ -109,6 +109,48 @@ export class Game {
         return Math.random() * (max - min) + min;
     }
 }
+
+export class GameDifficulty {
+    constructor(game) {
+        this.game = game;
+
+        this.current = 2; // Medium difficulty level.
+        this.levels = [
+            { description: "Beginner", inaccuracy: 14 },
+            { description: "Easy", inaccuracy: 12 },
+            { description: "Medium", inaccuracy: 10 },
+            { description: "Hard", inaccuracy: 8 },
+            { description: "Nightmare", inaccuracy: 6 },
+            { description: "Impossible", inaccuracy: 0 },
+        ];
+
+        this.timeUntilNextChange = 0;
+    }
+
+    update(deltaTime) {
+        const keyboard = this.game.getKeyboard();
+        const previous = this.current;
+
+        this.timeUntilNextChange -= deltaTime;
+
+        if (this.timeUntilNextChange > 0) { return; }
+
+        if (keyboard.isPressed(KeyboardKeys.ADD)) { this.current += 1; }
+        if (keyboard.isPressed(KeyboardKeys.SUBTRACT)) { this.current -= 1; }
+
+        if (this.current < 0) { this.current = 0; }
+        if (this.current == this.levels.length) { this.current = this.levels.length - 1; }
+
+        if (this.current != previous) {
+            this.game.handleGameDifficultyChange();
+            this.timeUntilNextChange = 175;
+        }
+    }
+
+    getCurrent() {
+        return this.levels[this.current];
+    }
+};
 
 export const GameSides = {
     LEFT: 0,
