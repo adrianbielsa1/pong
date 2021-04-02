@@ -19,6 +19,7 @@ export class Game {
 
         this.render = new CanvasRender(mainCanvas, mainCanvasContext);
         this.keyboard = new WindowKeyboard();
+        this.difficulty = new GameDifficulty(this);
 
         this.scores = {};
 
