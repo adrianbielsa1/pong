@@ -90,6 +90,11 @@ export class Game {
         }
     }
 
+    // Called when the game's difficulty is changed.
+    handleGameDifficultyChange() {
+        this.currentScreen.handleGameDifficultyChange();
+    }
+
     // Returns a fully-constructed `Render` object which can be used to
     // display shapes on the screen.
     getRender() {
@@ -100,6 +105,11 @@ export class Game {
     // gather input from the player.
     getKeyboard() {
         return this.keyboard;
+    }
+
+    // Returns a fully-constructed `GameDifficulty` object.
+    getDifficulty() {
+        return this.difficulty;
     }
 
     // Helper function to get a random number between two values.
