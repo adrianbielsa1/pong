@@ -201,17 +201,23 @@ export class IngameScreen extends Screen {
 
     draw() {
         const render = this.game.getRender();
+        const difficulty = this.game.getDifficulty().getCurrent().description;
 
         // Remove the previous frame from the screen.
         render.clear(render.theme.background());
 
         // Draw scores.
         render.text(
-            { x: 10, y: 50 }, 0.1, "red", this.game.scores[GameSides.LEFT], "Arial", "center"
+            { x: 40, y: 52.5 }, 0.05, "red", this.game.scores[GameSides.LEFT], "Arial", "center"
         );
 
         render.text(
-            { x: 90, y: 50 }, 0.1, "red", this.game.scores[GameSides.RIGHT], "Arial", "center"
+            { x: 60, y: 52.5 }, 0.05, "red", this.game.scores[GameSides.RIGHT], "Arial", "center"
+        );
+
+        // Draw difficulty.
+        render.text(
+            { x: 50, y: 5 }, 0.02, "red", "Difficulty: " + difficulty, "Arial", "center"
         );
 
         // Draw all objects.
