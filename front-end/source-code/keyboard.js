@@ -48,7 +48,9 @@ export const KeyboardKeys = {
     UP: 38,
     RIGHT: 39,
     DOWN: 40,
-}
+    ADD: 107,
+    SUBTRACT: 109,
+};
 
 // TODO: Explain.
 Object.freeze(KeyboardKeys);
