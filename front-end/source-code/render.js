@@ -192,6 +192,8 @@ export class RenderTheme {
     constructor() {
         this.image = document.getElementById("themeImage");
         this.image.addEventListener("click", this.onClick.bind(this));
+
+        this.helpImage = document.getElementById("helpImage");
     }
 
     // Called whenever the theme changer DOM object is clicked.
@@ -202,6 +204,8 @@ export class RenderTheme {
                 this.image.title = "Dark mode";
                 this.image.alt = "Dark mode";
                 this.image.src = "media/dark-mode.svg";
+
+                this.helpImage.src = "media/light-help.svg";
                 break;
 
             case "light":
@@ -209,6 +213,8 @@ export class RenderTheme {
                 this.image.title = "Light mode";
                 this.image.alt = "Light mode";
                 this.image.src = "media/light-mode.svg";
+
+                this.helpImage.src = "media/dark-help.svg";
                 break;
         }
     }
