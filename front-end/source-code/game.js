@@ -32,7 +32,7 @@ export class Game {
 
         // Keeps track of the current screen being shown, which might change
         // during the course of the game.
-        this.currentScreen = new MenuScreen(this);
+        this.currentScreen = new IngameScreen(this); // new MenuScreen(this);
     }
 
     // Updates the game continuously.
