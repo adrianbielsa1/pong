@@ -1,3 +1,6 @@
+// TODO: Remove?
+import { themeButton } from "./dom.js";
+
 // The render is an abstraction over the graphic backend used to display
 // graphics to the screen. The interface provided is designed for
 // immediate mode rendering, which would perform worse than a retained
@@ -188,90 +191,15 @@ export class CanvasRender {
 // established objects. What I mean with this is that I'm not sure this
 // class suffices the OOP concept appropiately, but whatever.
 export class RenderTheme {
-    // TODO: Add documentation.
-    constructor() {
-        this.image = document.getElementById("themeImage");
-        this.image.addEventListener("click", this.onClick.bind(this));
-
-        this.helpImage = document.getElementById("helpImage");
-    }
-
-    // Called whenever the theme changer DOM object is clicked.
-    onClick(eventInformation) {
-        switch (this.current()) {
-            case "dark":
-                // Change image to dark mode. The theme is now light.
-                this.image.title = "Dark mode";
-                this.image.alt = "Dark mode";
-                this.image.src = "media/dark-mode.svg";
-
-                this.helpImage.src = "media/light-help.svg";
-                break;
-
-            case "light":
-                // Change image to light mode. The theme is now dark.
-                this.image.title = "Light mode";
-                this.image.alt = "Light mode";
-                this.image.src = "media/light-mode.svg";
-
-                this.helpImage.src = "media/dark-help.svg";
-                break;
-        }
-    }
-
-    // Returns the current theme.
-    current() {
-        switch (this.image.title) {
-            case "Light mode":
-                return "dark";
-            case "Dark mode":
-                return "light";
-        }
-    }
-
     // Returns the current color of the background.
-    background() {
-        switch (this.current()) {
-            case "light":
-                return "white";
-            case "dark":
-                return "black";
-        }
-    }
+    background() { return themeButton.colors.background; }
 
     // Returns the current color of the ball.
-    ball() {
-        switch (this.current()) {
-            case "light":
-                return "blue";
-            case "dark":
-                return "aquamarine"; // "lightGrey";
-        }
-    }
+    ball() { return themeButton.colors.ball; }
 
     // Returns the current color of the paddle.
-    paddle() {
-        switch (this.current()) {
-            case "light":
-                return "black";
-            case "dark":
-                return "white";
-        }
-    }
+    paddle() { return themeButton.colors.paddle; }
 
     // Returns the current color of texts.
-    texts() {
-        // TODO: Change the color depending on the theme?
-        return "green";
-    }
-
-    // TODO: ...
-    getPath() {
-        switch (this.current()) {
-            case "light":
-                return "media/light-theme/";
-            case "dark":
-                return "media/dark-theme/";
-        }
-    }
-}
+    texts() { return themeButton.colors.text; }
+};
