@@ -75,12 +75,12 @@ export class PlayerPaddle extends Paddle {
         const keyboard = this.game.getKeyboard();
 
         // Check for each arrow key and move accordingly.
-        if (keyboard.isPressed(KeyboardKeys.UP)) { this.position.y -= velocity.y * deltaTimeInSeconds; }
-        if (keyboard.isPressed(KeyboardKeys.DOWN)) { this.position.y += velocity.y * deltaTimeInSeconds; }
+        if (keyboard.isPressed(KeyboardKeys.UP) || keyboard.isPressed(KeyboardKeys.W)) { this.position.y -= velocity.y * deltaTimeInSeconds; }
+        if (keyboard.isPressed(KeyboardKeys.DOWN) || keyboard.isPressed(KeyboardKeys.S)) { this.position.y += velocity.y * deltaTimeInSeconds; }
 
         // OLD: Horizontal movement.
-        // if (this.keyboard.isPressed(KeyboardKeys.LEFT)) { this.position.x -= velocity.x * deltaTimeInSeconds; }
-        // if (this.keyboard.isPressed(KeyboardKeys.RIGHT)) { this.position.x += velocity.x * deltaTimeInSeconds; }
+        // if (this.keyboard.isPressed(KeyboardKeys.LEFT) || keyboard.isPressed(KeyboardKeys.A)) { this.position.x -= velocity.x * deltaTimeInSeconds; }
+        // if (this.keyboard.isPressed(KeyboardKeys.RIGHT) || keyboard.isPressed(KeyboardKeys.D)) { this.position.x += velocity.x * deltaTimeInSeconds; }
 
         // Make sure the paddle doesn't go off-screen.
         if (this.position.x < 0) { this.position.x = 0; }

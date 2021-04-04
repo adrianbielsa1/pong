@@ -42,12 +42,20 @@ export class WindowKeyboard {
 // List of all possible keys that can be tracked by the keyboard. Since
 // there are no native enumerations in Javascript, we create a constant
 // object and freeze all of its properties so it cannot be modified.
+//
+// TODO: Does this only applies to `WindowKeyboard` objects?
 export const KeyboardKeys = {
     // Arrow keys.
     LEFT: 37,
     UP: 38,
     RIGHT: 39,
     DOWN: 40,
+
+    A: 65,
+    D: 68,
+    S: 83,
+    W: 87,
+
     ADD: 107,
     SUBTRACT: 109,
 };
