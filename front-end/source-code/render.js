@@ -259,6 +259,12 @@ export class RenderTheme {
         }
     }
 
+    // Returns the current color of texts.
+    texts() {
+        // TODO: Change the color depending on the theme?
+        return "green";
+    }
+
     // TODO: ...
     getPath() {
         switch (this.current()) {

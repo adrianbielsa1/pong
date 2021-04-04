@@ -208,16 +208,16 @@ export class IngameScreen extends Screen {
 
         // Draw scores.
         render.text(
-            { x: 40, y: 52.5 }, 0.05, "red", this.game.scores[GameSides.LEFT], "Arial", "center"
+            { x: 40, y: 52.5 }, 0.05, render.theme.texts(), this.game.scores[GameSides.LEFT], "Arial", "center"
         );
 
         render.text(
-            { x: 60, y: 52.5 }, 0.05, "red", this.game.scores[GameSides.RIGHT], "Arial", "center"
+            { x: 60, y: 52.5 }, 0.05, render.theme.texts(), this.game.scores[GameSides.RIGHT], "Arial", "center"
         );
 
         // Draw difficulty.
         render.text(
-            { x: 50, y: 5 }, 0.02, "red", "Difficulty: " + difficulty, "Arial", "center"
+            { x: 50, y: 5 }, 0.02, render.theme.texts(), "Difficulty: " + difficulty, "Arial", "center"
         );
 
         // Draw all objects.
