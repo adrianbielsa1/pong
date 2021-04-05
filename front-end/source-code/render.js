@@ -7,29 +7,19 @@ import { themeButton } from "./dom.js";
 // rendering approach, yet it is more than enough for our needs.
 export class Render {
     // Paints a rectangle on the screen.
-    rectangle(position, dimension, color) {
-
-    }
+    rectangle(position, dimension, color) {}
 
     // Paints a circle on the screen.
-    circle(position, radius, color) {
-
-    }
+    circle(position, radius, color) {}
 
     // Paints a image on the screen.
-    image(data, position, dimensions) {
-
-    }
+    image(data, position, dimensions) {}
 
     // Paints a line segment on the screen.
-    segment(start, end, color, thickness) {
-        
-    }
+    segment(start, end, color, thickness) {}
 
     // Displays text on the screen.
-    text(position, size, color, contents, font, alignment) {
-
-    }
+    text(position, size, color, contents, font, alignment) {}
 }
 
 // Concrete HTML5 canvas backend.
