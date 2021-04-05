@@ -243,3 +243,32 @@ export class IngameScreen extends Screen {
         this.paddles.forEach(p => { p.handleGameDifficultyChange(); });
     }
 };
+
+export class HelpScreen extends Screen {
+    constructor(game) {
+        // Invoke our parent's constructor.
+        super();
+
+        // Store objects so we can use them later.
+        this.game = game;
+    }
+
+    draw() {
+        const render = this.game.getRender();
+
+        // Remove the previous frame from the screen.
+        render.clear(render.theme.background());
+
+        render.text(
+            { x: 50, y: 45 }, 0.02, render.theme.texts(), "Move your paddle using the arrow keys or WASD!", "Arial", "center"
+        );
+
+        render.text(
+            { x: 50, y: 50 }, 0.02, render.theme.texts(), "To increase the difficulty, press the + key.", "Arial", "center"
+        );
+
+        render.text(
+            { x: 50, y: 55 }, 0.02, render.theme.texts(), "To decrease it, press the - key.", "Arial", "center"
+        );
+    }
+}
