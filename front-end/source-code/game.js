@@ -1,6 +1,6 @@
 import { CanvasRender } from "./render.js";
 import { WindowKeyboard, KeyboardKeys } from "./keyboard.js";
-import { IngameScreen, MenuScreen } from "./screen.js";
+import { HelpScreen, IngameScreen } from "./screen.js";
 
 // The game is a container of all the elements that make up the Pong
 // itself. It serves the purpose of preparing, running and terminating
@@ -29,6 +29,13 @@ export class Game {
 
         // To be notified when the tab's visiblity changes.
         document.addEventListener("visibilitychange", this.handleVisibilityChange.bind(this), false);
+
+        // To be notified when the current screen should be changed.
+        //
+        // NOTE: This doesn't create new screens every time the event is raised,
+        // instead, it re-uses the same screens that were created the first time.
+        document.addEventListener("queryHelpScreenShow", this.handleGameScreenChange.bind(this, new HelpScreen(this)));
+        document.addEventListener("queryIngameScreenShow", this.handleGameScreenChange.bind(this, new IngameScreen(this)));
 
         // Keeps track of the current screen being shown, which might change
         // during the course of the game.
@@ -95,6 +102,11 @@ export class Game {
     // Called when the game's difficulty is changed.
     handleGameDifficultyChange() {
         this.currentScreen.handleGameDifficultyChange();
+    }
+
+    // Called whenever the game's screen is changed.
+    handleGameScreenChange(newScreen) {
+        this.currentScreen = newScreen;
     }
 
     // Returns a fully-constructed `Render` object which can be used to
