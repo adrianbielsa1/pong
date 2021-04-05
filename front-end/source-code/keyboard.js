@@ -2,10 +2,8 @@
 export class Keyboard {
     // Returns either `true` or `false`, depending on whether the specified
     // key is pressed or not.
-    isPressed(key) {
-
-    }
-}
+    isPressed(key) {}
+};
 
 // Concrete implementation that makes use of the window's keyboard
 // interface.
@@ -37,7 +35,7 @@ export class WindowKeyboard {
     isPressed(keyCode) {
         return this.states[keyCode];
     }
-}
+};
 
 // List of all possible keys that can be tracked by the keyboard. Since
 // there are no native enumerations in Javascript, we create a constant

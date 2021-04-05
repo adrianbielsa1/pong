@@ -5,17 +5,14 @@ import { BotPaddle, PlayerPaddle } from "./paddle.js";
 
 // Base class used to build concrete screens.
 export class Screen {
-    constructor() {
+    // To set up the screen.
+    constructor() {}
 
-    }
+    // To display the screen's object.
+    draw() {}
 
-    draw() {
-
-    }
-
-    update() {
-
-    }
+    // To update screen-related objects.
+    update(deltaTime) {}
 
     // Called whenever the site's visibility is changed.
     handleSiteVisibilityChange() {}

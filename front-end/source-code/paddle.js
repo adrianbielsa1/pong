@@ -25,14 +25,10 @@ export class Paddle {
 
     // Called when the ball changes its trajectory so the paddle can respond
     // accordingly.
-    handleBallTrajectoryChange(ball) {
-
-    }
+    handleBallTrajectoryChange(ball) {}
 
     // Called when the game's difficulty changes.
-    handleGameDifficultyChange() {
-
-    }
+    handleGameDifficultyChange() {}
 
     // Returns the paddle's rectangle, which can be used to check for
     // collisions.
