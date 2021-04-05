@@ -5,7 +5,7 @@ const queryHelpScreenShow = new Event("queryHelpScreenShow");
 const queryIngameScreenShow = new Event("queryIngameScreenShow");
 
 export const themeButton = {
-    element: document.getElementById("themeImage"),
+    element: document.getElementById("themeButton"),
     current: "dark",
 
     // Dictionary that maps a element of the game to its current color.
@@ -67,7 +67,7 @@ export const themeButton = {
 };
 
 export const helpButton = {
-    element: document.getElementById("helpImage"),
+    element: document.getElementById("helpButton"),
 
     // Changes the button's title & image to match its current job.
     swap: function(newAction) {
