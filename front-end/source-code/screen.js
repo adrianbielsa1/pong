@@ -16,6 +16,15 @@ export class Screen {
     update() {
 
     }
+
+    // Called whenever the site's visibility is changed.
+    handleSiteVisibilityChange() {}
+
+    // Called whenever the game's difficulty is changed.
+    handleGameDifficultyChange() {}
+
+    // Called whenever the game's screen is changed.
+    handleGameScreenChange(newScreen) {}
 };
 
 // A screen where the player can change the game's difficulty, the side
