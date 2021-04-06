@@ -108,6 +108,17 @@ export const helpButton = {
     },
 };
 
+export const mainCanvas = {
+    element: document.getElementById("mainCanvas"),
+    context: document.getElementById("mainCanvas").getContext("2d"),
+
+    // Caled whenever the site's area of display changes.
+    onSiteResize: function() {
+        mainCanvas.element.width = window.innerWidth;
+        mainCanvas.element.height = window.innerHeight;
+    },
+};
+
 // Hook events so the elements know when they're clicked (or some other
 // action is performed on them).
 themeButton.element.addEventListener("click", themeButton.onClick);
@@ -117,7 +128,11 @@ helpButton.element.addEventListener("click", helpButton.onClick);
 document.addEventListener("notifyThemeChange", themeButton.onThemeChange);
 document.addEventListener("notifyThemeChange", helpButton.onThemeChange);
 
+// Let the canvas know when the site changes.
+window.addEventListener("resize", mainCanvas.onSiteResize);
+
 // NOTE: We do not freeze the `themeButton` object because we need to keep
 // track of the current theme which means mutating the button's internal
 // state.
 Object.freeze(helpButton);
+Object.freeze(mainCanvas);
