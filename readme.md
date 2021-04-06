@@ -7,3 +7,6 @@ A simplistic web pong, made with HTML, CSS, and Javascript.
 - Run `live-server --entry-file=index.html`.
 
 The `--entry-file=index.html` argument is important because the folder structure is slightly different than the default one.
+
+## Special notes
+The icons used in this web-site (which you can find on the [media](front-end/media) folder) were taken from the [flaticon](https://flaticon.es) web-site; many of them were manually modified. Credits to the authors of these wonderful icons.
